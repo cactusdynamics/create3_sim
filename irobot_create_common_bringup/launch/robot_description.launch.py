@@ -6,18 +6,21 @@
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import Command, PathJoinSubstitution, LaunchConfiguration
+from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 
 ARGUMENT = [
- DeclareLaunchArgument('visualize_rays', default_value='false',
+    DeclareLaunchArgument('visualize_rays', default_value='false',
                           choices=['true', 'false'],
                           description='Enable/disable ray visualization'),
 ]
 
+
 def generate_launch_description():
-    pkg_create3_description = get_package_share_directory('irobot_create_description')
-    xacro_file = PathJoinSubstitution([pkg_create3_description, 'urdf', 'create3.urdf.xacro'])
+    pkg_create3_description = get_package_share_directory(
+        'irobot_create_description')
+    xacro_file = PathJoinSubstitution(
+        [pkg_create3_description, 'urdf', 'create3.urdf.xacro'])
     visualize_rays = LaunchConfiguration('visualize_rays')
     robot_state_publisher = Node(
         package='robot_state_publisher',
